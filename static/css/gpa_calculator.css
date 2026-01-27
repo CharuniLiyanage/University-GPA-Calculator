@@ -1,0 +1,84 @@
+:root {
+    --primary-color: #0f172a;    /* Navy / data tone */
+    --secondary-color: #2563eb;  /* Clean blue */
+    --accent-color: #22c55e;     /* Success green */
+    --bg-color: #f8fafc;         /* Very light */
+    --card-bg: #ffffff;
+    --text-color: #1e293b;
+}
+
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-color); }
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 { font-size: 24px; }
+nav a { 
+    margin-left: 25px; 
+    color:white; 
+    font-weight:500; 
+    text-decoration: none;
+    transition: color 0.3s; }
+nav a:hover { color: var(--accent-color); }
+
+.container { padding: 40px; max-width: 800px; margin:auto; }
+
+.card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.card h3 { color: var(--primary-color); margin-bottom: 20px; text-align:center; }
+
+form input, form select, form button {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+form button {
+    background-color: var(--accent-color);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+form button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td { padding: 10px; text-align: center; }
+
+.gpa-result {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+    color: var(--secondary-color);
+    font-weight: 600;
+}

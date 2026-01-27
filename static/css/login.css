@@ -1,0 +1,91 @@
+/* -------------------------- COLORS -------------------------- */
+:root {
+    --primary-color: #0f172a;    /* Navy / data tone */
+    --secondary-color: #2563eb;  /* Clean blue */
+    --accent-color: #22c55e;     /* Success green */
+    --bg-color: #f8fafc;         /* Very light */
+    --card-bg: #ffffff;
+    --text-color: #1e293b;
+}
+
+
+/* -------------------------- GLOBAL -------------------------- */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif; 
+}
+
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+}
+
+/* -------------------------- LOGIN CONTAINER -------------------------- */
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+}
+
+.login-card {
+    background-color: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    width: 350px;
+    text-align: center;
+}
+
+.login-card h2 {
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.login-card input[type="text"],
+.login-card input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.login-card button:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.login-card .error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.login-card p {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-card p a {
+    color: var(--primary-color);
+    font-weight: 500;
+}

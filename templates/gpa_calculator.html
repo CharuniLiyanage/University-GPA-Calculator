@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GPA Calculator - Student Performance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gpa_calculator.css') }}">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <h1>🎓 GPA Calculator</h1>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('gpa_calculator_route') }}">GPA Calculator</a>
+        <a href="{{ url_for('home') }}">Log Out</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- ADD SUBJECT FORM -->
+    <div class="card">
+        <h3>Add a Subject</h3>
+        <form method="POST" action="{{ url_for('add_subject') }}">
+            <input type="text" name="subject_name" placeholder="Subject Name (e.g., Programming)" required>
+            <input type="number" name="credit" placeholder="Credits (1.0 - 5.0)" min="1" max="5" step="0.25" required>
+            <select name="grade" required>
+                <option value="">Select Grade</option>
+                <option value="A+">A+</option>
+                <option value="A">A</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B">B</option>
+                <option value="B-">B-</option>
+                <option value="C+">C+</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="F">F</option>
+            </select>
+            <button type="submit">Add Subject</button>
+        </form>
+    </div>
+
+    <!-- CALCULATE GPA -->
+    <div class="card">
+        <h3>Calculate GPA</h3>
+        <form method="POST" action="{{ url_for('gpa_calculator_route') }}">
+            <button type="submit">Calculate & Save GPA</button>
+        </form>
+    </div>
+
+    <!-- SHOW CURRENT GPA -->
+    <div class="card">
+        <h3>Current GPA</h3>
+        <p>GPA: {{ gpa if gpa is defined else 0.00 }}</p>
+    </div>
+
+    <div class="card">
+    <h3>Manage Your Subjects</h3>
+    <table border="1" style="width:100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th>Subject</th>
+                <th>Credit</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in subjects %}
+            <tr>
+                <td>{{ s.subject_name }}</td>
+                <td>{{ s.credit }}</td>
+                <td>{{ s.grade }}</td>
+                <td style="text-align: center;">
+                    <a href="{{ url_for('delete_subject', subject_id=s.id) }}" 
+                       style="color: #ff4d4d; font-weight: bold; text-decoration: none;"
+                       onclick="return confirm('Are you sure you want to remove this subject?')">
+                       Remove
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Analysis System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- HEADER / NAVBAR -->
+    <header>
+        <h1>🎓 Student Performance Analysis</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('about') }}">About Us</a>
+            
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h2>Welcome to the Student Performance Analysis System</h2>
+        <p>Analyze marks, track GPA trends, and get data-driven academic insights.</p>
+        <button onclick="goToDashboard()">Go to Dashboard</button>
+    </section>
+
+    <!-- CARDS / FEATURES -->
+    <section class="cards-container">
+        <div class="card">
+            <h3>Subject Analysis</h3>
+            <p>See subject-wise performance and identify weak subjects.</p>
+        </div>
+        <div class="card">
+            <h3>GPA Trends</h3>
+            <p>Track student GPA and detect improvement or decline.</p>
+        </div>
+        <div class="card">
+            <h3>Weak/At-Risk Students</h3>
+            <p>Identify students needing attention and provide targeted improvement suggestions.</p>
+        </div>
+        <div class="card">
+            <h3>Suggestions & Insights</h3>
+            <p>Get automated recommendations for academic improvement based on data analysis.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        &copy; 2026 Student Performance Analysis System. All rights reserved.
+    </footer>
+
+    <!-- External JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

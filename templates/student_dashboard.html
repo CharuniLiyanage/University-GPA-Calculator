@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Performance Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard_all.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Flask data -->
+    <script>
+        // JSON.parse and quotes stop the IDE from showing red error lines
+        const subjectsRaw = '{{ subjects | tojson | safe }}';
+        window.subjectsData = JSON.parse(subjectsRaw);
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>🎓 My Performance</h1>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="#gpa">My GPA</a>
+        <a href="#subjects">Subjects</a>
+        <a href="#risk">My Risk</a>
+        <a href="{{ url_for('gpa_calculator_route') }}">Calculate GPA</a>
+        <a href="{{ url_for('home') }}">Log Out</a>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- OVERALL GPA -->
+    <section class="card" id="gpa">
+        <h2>📈 My Overall GPA</h2>
+        <h3 id="overallGpa"></h3>
+        <div id="gpaStatus" class="status"></div>
+    </section>
+
+    <!-- SUBJECT ANALYSIS -->
+    <section class="card" id="subjects">
+        <h2>📊 Subject-wise Performance</h2>
+        <canvas id="subjectChart"></canvas>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Grade Point</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="subjectTable"></tbody>
+        </table>
+    </section>
+
+    <!-- RISK ANALYSIS -->
+    <section class="card" id="risk">
+        <h2>⚠️ My Academic Risk</h2>
+        <p id="riskStatus"></p>
+
+        <div class="suggestion-box">
+            📌 Focus more on weak subjects, attend extra classes, and practice past papers.
+        </div>
+    </section>
+
+    <!-- SUGGESTIONS -->
+    <section class="card">
+        <h2>💡 Personalized Suggestions</h2>
+        <ul id="suggestionList"></ul>
+    </section>
+
+</div>
+
+<!-- JS -->
+<script src="{{ url_for('static', filename='js/dashboard_all.js') }}"></script>
+</body>
+</html>
