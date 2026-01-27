@@ -82,3 +82,35 @@ th, td { padding: 10px; text-align: center; }
     color: var(--secondary-color);
     font-weight: 600;
 }
+
+/* Tablet and below */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 15px;
+    }
+
+    nav a {
+        margin: 0 10px;
+        display: inline-block; /* Better spacing for touch */
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr; /* Full width cards */
+    }
+    
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .card h2 {
+        font-size: 1.25rem;
+    }
+}

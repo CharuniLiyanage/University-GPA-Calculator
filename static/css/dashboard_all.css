@@ -94,21 +94,34 @@ th, td {
     margin-top: 10px;
 }
 
-/* -------------------------- RESPONSIVE -------------------------- */
-@media screen and (max-width: 768px) {
-    .dashboard-header {
+/* Tablet and below */
+@media (max-width: 768px) {
+    header {
         flex-direction: column;
-        align-items: flex-start;
+        text-align: center;
     }
 
-    .header-right {
-        margin-top: 10px;
+    nav {
+        margin-top: 15px;
     }
 
-    .header-right a {
-        display: inline-block;
-        margin-left: 0;
-        margin-right: 15px;
-        margin-bottom: 5px;
+    nav a {
+        margin: 0 10px;
+        display: inline-block; /* Better spacing for touch */
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr; /* Full width cards */
+    }
+    
+    header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .card h2 {
+        font-size: 1.25rem;
     }
 }
