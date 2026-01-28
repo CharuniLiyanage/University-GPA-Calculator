@@ -90,6 +90,39 @@ body {
     font-weight: 500;
 }
 
+.flash.success {
+    color: green;
+    background-color: #e0f8e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash.error {
+    color: red;
+    background-color: #f8d7da;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+
 /* Tablet and below */
 @media (max-width: 768px) {
     header {

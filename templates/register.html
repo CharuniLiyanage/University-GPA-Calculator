@@ -9,6 +9,19 @@
 </head>
 <body>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div>
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
 <div class="register-container">
     <div class="register-card">
         <h2>Register</h2>
@@ -17,13 +30,35 @@
         <div class="error">{{ error }}</div>
         {% endif %}
 
-        <form method="POST" action="{{ url_for('register') }}">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            <button type="submit">Register</button>
-        </form>
+<form method="POST" action="{{ url_for('register') }}" autocomplete="off">
+    
+    <div style="opacity: 0; position: absolute; top: 0; left: 0; height: 0; width: 0; overflow: hidden;">
+        <input type="text" name="fake_user_name">
+        <input type="password" name="fake_password">
+    </div>
+
+    <input type="text" name="username" placeholder="Username" required autocomplete="off">
+    <input type="email" name="email" placeholder="Email" required autocomplete="off">
+
+    <input type="password" 
+           name="password" 
+           placeholder="Password" 
+           required
+           pattern="(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{6,}"
+           autocomplete="new-password"> 
+
+    <small style="color: #555; display: block; margin-bottom: 10px;">
+        Password must be at least 6 characters...
+    </small>   
+
+    <input type="password" 
+           name="confirm_password" 
+           placeholder="Confirm Password" 
+           required
+           autocomplete="new-password">
+
+    <button type="submit">Register</button>
+</form>
 
         <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
     </div>

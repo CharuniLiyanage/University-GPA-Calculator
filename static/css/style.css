@@ -45,8 +45,9 @@ header h1 {
 nav a {
     margin-left: 25px;
     font-weight: 500;
+    color:white;
     transition: color 0.3s;
-    text-decoration: none;
+    text-decoration: 0.3s;
 }
 
 nav a:hover {

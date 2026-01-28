@@ -16,7 +16,7 @@ def get_db():
 def create_tables():
     db = get_db()
     cur = db.cursor()
-    # Users table with GPA column
+    # Users table
     cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,24 +40,17 @@ def create_tables():
     db.commit()
     db.close()
 
+# Clean up any NULL usernames (optional safety)
+def cleanup_users():
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    cur.execute("UPDATE users SET username='user'||id WHERE username IS NULL OR username=''")
+    conn.commit()
+    conn.close()
+
 # Initialize DB
 create_tables()
-
-import sqlite3
-
-conn = sqlite3.connect("database.db")
-cur = conn.cursor()
-
-# Add 'gpa' column if it doesn't exist
-try:
-    cur.execute("ALTER TABLE users ADD COLUMN gpa REAL DEFAULT 0")
-    print("Column 'gpa' added successfully!")
-except sqlite3.OperationalError as e:
-    print("Probably column already exists:", e)
-
-conn.commit()
-conn.close()
-
+cleanup_users()
 
 # ---------------- GPA CALCULATION ----------------
 def calculate_gpa(subjects):
@@ -87,29 +80,64 @@ def calculate_gpa(subjects):
 def home():
     return render_template("home.html")
 
-@app.route("/register", methods=["GET", "POST"])
+# ---------------- REGISTER ----------------
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = generate_password_hash(request.form["password"])
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
 
-        db = get_db()
+        # 1️⃣ Validation
+        if not username or not email or not password or not confirm_password:
+            flash("All fields are required.", "error")
+            return redirect(url_for('register'))
+
+        if password != confirm_password:
+            flash("Passwords do not match.", "error")
+            return redirect(url_for('register'))
+
+        if len(password) < 6:
+            flash("Password must be at least 6 characters.", "error")
+            return redirect(url_for('register'))
+
+        hashed_password = generate_password_hash(password)
+
         try:
-            db.execute(
-                "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-                (username, email, password)
-            )
-            db.commit()
+            with sqlite3.connect(DB_FILE, timeout=10) as conn:
+                cursor = conn.cursor()
+
+                # 2️⃣ Check email first
+                cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+                if cursor.fetchone():
+                    flash("This email is already registered. Please login.", "warning")
+                    return redirect(url_for('login'))
+
+                # 3️⃣ Check username too
+                cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
+                if cursor.fetchone():
+                    flash("Username already exists. Choose a different one.", "warning")
+                    return redirect(url_for('register'))
+
+                # 4️⃣ Insert user
+                cursor.execute(
+                    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                    (username, email, hashed_password)
+                )
+                conn.commit()
+
             flash("Registration successful! Please login.", "success")
-            return redirect(url_for("login"))
+            return redirect(url_for('login'))
+
         except sqlite3.IntegrityError:
-            flash("Username or email already exists!", "error")
-        finally:
-            db.close()
+            # backup in case UNIQUE constraint is triggered
+            flash("Email or Username already exists. Please login.", "warning")
+            return redirect(url_for('login'))
 
-    return render_template("register.html")
+    return render_template('register.html')
 
+# ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -132,38 +160,33 @@ def login():
 
     return render_template("login.html")
 
+# ---------------- DASHBOARD ----------------
 @app.route("/dashboard")
 def dashboard():
     if "user_id" not in session:
         return redirect(url_for("login"))
 
     db = get_db()
-    
-    # 1. Fetch subjects for the chart and table
     rows = db.execute(
         "SELECT id, subject_name, credit, grade FROM subjects WHERE user_id=?",
         (session["user_id"],)
     ).fetchall()
     subjects_list = [dict(row) for row in rows]
-    
-    # 2. Fetch the SAVED gpa from the users table
+
     user_data = db.execute("SELECT gpa FROM users WHERE id=?", (session["user_id"],)).fetchone()
-    
-    # 3. Calculate the live gpa (in case they haven't saved it yet)
     calculated_gpa, _, _ = calculate_gpa(subjects_list)
-    
     db.close()
 
-    # Use the saved GPA, but if it's 0 and there are subjects, show the calculated one
     display_gpa = user_data["gpa"] if user_data and user_data["gpa"] > 0 else calculated_gpa
 
     return render_template(
         "dashboard.html",
         username=session["username"],
         subjects=subjects_list,
-        gpa=display_gpa  # This matches {{ gpa }} in your HTML
+        gpa=display_gpa
     )
 
+# ---------------- ADD SUBJECT ----------------
 @app.route("/add_subject", methods=["GET", "POST"])
 def add_subject():
     if "user_id" not in session:
@@ -197,21 +220,19 @@ def add_subject():
 
     return render_template("add_subject.html")
 
+# ---------------- GPA CALCULATOR ----------------
 @app.route("/gpa_calculator", methods=["GET", "POST"])
 def gpa_calculator_route():
     if "user_id" not in session:
         return redirect(url_for("login"))
 
     db = get_db()
-    
-    # 1. Fetch current subjects so the student can see/remove them
     rows = db.execute(
         "SELECT id, subject_name, credit, grade FROM subjects WHERE user_id=?",
         (session["user_id"],)
     ).fetchall()
     subjects_list = [dict(row) for row in rows]
 
-    # 2. Calculate the current GPA
     gpa, total_credits, weak_count = calculate_gpa(subjects_list)
 
     if request.method == "POST":
@@ -224,30 +245,33 @@ def gpa_calculator_route():
     db.close()
     return render_template("gpa_calculator.html", gpa=gpa, subjects=subjects_list)
 
+# ---------------- DELETE SUBJECT ----------------
 @app.route("/delete_subject/<int:subject_id>")
 def delete_subject(subject_id):
     if "user_id" not in session:
         return redirect(url_for("login"))
 
     db = get_db()
-    # Ensure the subject belongs to the logged-in user for security
     db.execute("DELETE FROM subjects WHERE id=? AND user_id=?", (subject_id, session["user_id"]))
     db.commit()
     db.close()
-    
+
     flash("Subject removed.", "info")
     return redirect(url_for("gpa_calculator_route"))
 
+# ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for("login"))
 
+# ---------------- ABOUT ----------------
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+# ---------------- STUDENT DASHBOARD ----------------
 @app.route("/student_dashboard")
 def student_dashboard():
     if "user_id" not in session:
@@ -255,28 +279,22 @@ def student_dashboard():
         return redirect(url_for("login"))
 
     db = get_db()
-    # Fetch all subjects for the user
     subjects = db.execute(
         "SELECT subject_name, credit, grade FROM subjects WHERE user_id=?",
         (session["user_id"],)
     ).fetchall()
 
-    # Fetch GPA
-    user = db.execute(
-        "SELECT gpa FROM users WHERE id=?",
-        (session["user_id"],)
-    ).fetchone()
+    user = db.execute("SELECT gpa FROM users WHERE id=?", (session["user_id"],)).fetchone()
     db.close()
 
     gpa = user["gpa"] if user else 0
 
     return render_template(
         "student_dashboard.html",
-        subjects=[dict(s) for s in subjects],  # convert Row objects to dicts
+        subjects=[dict(s) for s in subjects],
         gpa=gpa
     )
 
-
 # ---------------- RUN APP ----------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

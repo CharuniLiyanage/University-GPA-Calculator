@@ -6,6 +6,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div>
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
 <div class="login-container">
     <div class="login-card">
         <h2>Login</h2>
@@ -29,5 +42,7 @@
         <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
     </div>
 </div>
+
+
 </body>
 </html>
