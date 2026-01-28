@@ -83,6 +83,15 @@ th, td { padding: 10px; text-align: center; }
     font-weight: 600;
 }
 
+nav a.highlight {
+    color: rgb(48, 171, 223);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
 /* Tablet and below */
 @media (max-width: 768px) {
     header {

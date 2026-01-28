@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
-app.secret_key = "secret123"
+app.secret_key = os.environ.get("SECRET_GPA2026_KEY", "GPA_dev_key")
 DB_FILE = "database.db"
 
 # ---------------- DATABASE ----------------

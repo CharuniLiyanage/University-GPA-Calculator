@@ -123,6 +123,15 @@ nav a:hover {
     color: #555;
 }
 
+nav a.highlight {
+    color: rgb(48, 171, 223);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
 /* -------------------------- FOOTER -------------------------- */
 footer {
     text-align: center;

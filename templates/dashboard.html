@@ -14,9 +14,10 @@
     <h4>Welcome, {{ username }}</h4>
     <nav>
         <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('gpa_calculator_route') }}">Calculate GPA</a>
-        <a href="{{ url_for('student_dashboard') }}">My Performance</a>
-        <a href="{{ url_for('home') }}">Logout</a>
+        <a href="{{ url_for('dashboard') }}"class=highlight>DASHBOARD</a>
+        <a href="{{ url_for('gpa_calculator_route') }}">CALCULATE GPA</a>
+        <a href="{{ url_for('student_dashboard') }}">MY PERFORMANCE</a>
+        <a href="{{ url_for('home') }}">LOGOUT</a>
     </nav>
 </header>
 
