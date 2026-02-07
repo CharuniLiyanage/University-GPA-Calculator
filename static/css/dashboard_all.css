@@ -1,21 +1,21 @@
+/* -------------------------- PROFESSIONAL PALETTE -------------------------- */
+:root {
+    --primary-color: #0f172a;    /* Deep Navy */
+    --secondary-color: #4f46e5;  /* Indigo Accent */
+    --accent-color: #10b981;     /* Emerald Green */
+    --bg-color: #f8fafc;         /* Soft Pearl */
+    --card-bg: #ffffff;
+    --text-color: #334155;       /* Slate Grey */
+    --border-color: #e2e8f0;
+}
+
 /* -------------------------- GLOBAL -------------------------- */
 * { 
-    margin:0; 
-    padding:0; 
-    box-sizing:border-box; 
-    font-family: 'Roboto', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Inter', 'Roboto', sans-serif; 
 }
-
-/* -------------------------- COLORS -------------------------- */
-:root {
-    --primary-color: #0f172a;    /* Navy / data tone */
-    --secondary-color: #2563eb;  /* Clean blue */
-    --accent-color: #22c55e;     /* Success green */
-    --bg-color: #f8fafc;         /* Very light */
-    --card-bg: #ffffff;
-    --text-color: #1e293b;
-}
-
 
 /* -------------------------- BODY -------------------------- */
 body { 
@@ -33,107 +33,132 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-header h1 { font-size: 24px; }
+
+header h1 { 
+    font-size: 24px; 
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
 
 nav a {
     margin-left: 25px; 
-    color:white;
-    font-weight:500; 
+    color: #94a3b8;
+    font-weight: 500; 
     text-decoration: none;
     transition: color 0.3s; 
 }
-nav a:hover { color: var(--accent-color); }
+
+nav a:hover, nav a.highlight { color: white; }
 
 /* -------------------------- CONTAINER -------------------------- */
 .container {
-    padding: 20px;
-    max-width: 1200px;
+    padding: 40px 20px;
+    max-width: 1100px;
     margin: auto;
 }
 
 /* -------------------------- CARD -------------------------- */
 .card {
     background: var(--card-bg);
-    padding: 20px;
+    padding: 30px;
     margin-bottom: 25px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 h2 {
-    color: #1e3a8a;
-    margin-bottom: 10px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* --------------------------SPECIAL  CARD -------------------------- */
+.card {
+    background: var(--card-bg);
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 /* -------------------------- TABLE -------------------------- */
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     margin-top: 15px;
 }
 
-th, td {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
+th {
+    background: #f1f5f9;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px;
+}
+
+td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 12px;
     text-align: center;
 }
 
+/* -------------------------- STATUS COLORS -------------------------- */
 .status {
     margin-top: 15px;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.1rem;
 }
 
-.good { color: green; }
-.warn { color: orange; }
-.risk { color: red; }
+.good { color: #059669; } /* Rich Emerald */
+.warn { color: #d97706; } /* Rich Amber */
+.risk { color: #dc2626; } /* Rich Red */
 
+/* -------------------------- SUGGESTIONS -------------------------- */
 .suggestion-box {
-    background: #eef2ff;
-    padding: 15px;
-    border-left: 5px solid #1e3a8a;
-    margin-top: 10px;
+    background: #eef2ff; /* Soft Indigo tint */
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 6px solid var(--secondary-color);
+    margin-top: 20px;
 }
 
-nav a.highlight {
-    color: rgb(48, 171, 223);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: transform 0.2s;
+.suggestion-box h4 {
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+    font-size: 1rem;
 }
 
-
-
-/* Tablet and below */
+/* -------------------------- RESPONSIVE -------------------------- */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
-        text-align: center;
+        padding: 20px;
     }
 
-    nav {
-        margin-top: 15px;
-    }
+    nav { margin-top: 20px; }
 
     nav a {
         margin: 0 10px;
-        display: inline-block; /* Better spacing for touch */
+        font-size: 14px;
     }
 }
 
-/* Mobile Phones */
 @media (max-width: 480px) {
-    .container {
-        grid-template-columns: 1fr; /* Full width cards */
-    }
-    
-    header h1 {
-        font-size: 1.2rem;
-    }
-    
-    .card h2 {
-        font-size: 1.25rem;
-    }
+    .card { padding: 20px; }
+    header h1 { font-size: 1.2rem; }
 }

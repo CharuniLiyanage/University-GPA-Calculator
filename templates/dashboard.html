@@ -2,53 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Student Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 <body>
-    <body>
 
 <header>
-    <h1>🎓 Dashboard</h1>
-    <h4>Welcome, {{ username }}</h4>
-    <nav>
-        <a href="{{ url_for('home') }}">Home</a>
-        <a href="{{ url_for('dashboard') }}"class=highlight>DASHBOARD</a>
-        <a href="{{ url_for('gpa_calculator_route') }}">CALCULATE GPA</a>
-        <a href="{{ url_for('student_dashboard') }}">MY PERFORMANCE</a>
-        <a href="{{ url_for('home') }}">LOGOUT</a>
-    </nav>
-</header>
+        <h1>🎓 Student Performance Analysis</h1>
+        <nav>
+            <a href="{{ url_for('home') }}"class=highlight>Home</a>
+            <a href="{{ url_for('home') }}">Logout</a>
+            
+        </nav>
+    </header>
 
-<div class="dashboard-container">
-
-    <div class="cards">
-        <div class="card">
-            <h3>Total Subjects</h3>
-            <p>{{ subjects|length }}</p>
+<main class="dashboard-wrapper">
+    <section class="welcome-banner">
+        <div class="welcome-text">
+            <h1>Welcome back, {{ username }}!</h1>
+            <p>Your academic journey at a glance.</p>
         </div>
-
-        <div class="card">
-            <h3>Current GPA</h3>
-            <p>{{ gpa }}</p>
+        <div class="quick-stats">
+            <div class="mini-stat">
+                <span>Stored GPA</span>
+                <strong>{{ gpa if gpa else '0.00' }}</strong>
+            </div>
+            <div class="mini-stat">
+                <span>Subjects</span>
+                <strong>{{ subjects|length }}</strong>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <section class="action-grid">
+        <a href="{{ url_for('gpa_calculator_route') }}" class="action-card">
+            <div class="icon-box blue">✏️</div>
+            <div class="action-info">
+                <h3>GPA Calculator</h3>
+                <p>Manage your semester subjects and update your current grades.</p>
+            </div>
+            <span class="arrow">→</span>
+        </a>
 
-    <div class="chart-container">
-        <h3>Subject Performance</h3>
-        <canvas id="subjectChart"></canvas>
-    </div>
+        <a href="{{ url_for('student_dashboard') }}" class="action-card">
+            <div class="icon-box green">📊</div>
+            <div class="action-info">
+                <h3>Performance Insights</h3>
+                <p>View detailed analysis and academic standing reports.</p>
+            </div>
+            <span class="arrow">→</span>
+        </a>
 
-</div>
+        <a href="{{ url_for('about') }}" class="action-card">
+            <div class="icon-box purple">ℹ️</div>
+            <div class="action-info">
+                <h3>System Info</h3>
+                <p>Learn about the grading scale and system updates.</p>
+            </div>
+            <span class="arrow">→</span>
+        </a>
+    </section>
+</main>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // JSON.parse and quotes stop the IDE from showing red error lines
-    const subjectsRaw = '{{ subjects | tojson | safe }}';
-    window.subjectsData = JSON.parse(subjectsRaw);
-</script>
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
 </html>

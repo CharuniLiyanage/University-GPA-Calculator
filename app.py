@@ -55,10 +55,10 @@ cleanup_users()
 # ---------------- GPA CALCULATION ----------------
 def calculate_gpa(subjects):
     grade_points = {
-        "A+":4.0, "A":4.0, "A-":3.7,
-        "B+":3.3, "B":3.0, "B-":2.7,
-        "C+":2.3, "C":2.0,
-        "D":1.0, "F":0.0
+        "A+": 4.0, "A": 4.0, "A-": 3.7,
+        "B+": 3.3, "B": 3.0, "B-": 2.7,
+        "C+": 2.3, "C": 2.0, "C-": 1.7,  # Added comma and C-
+        "D": 1.0, "F": 0.0
     }
     total_points = 0
     total_credits = 0
@@ -69,12 +69,13 @@ def calculate_gpa(subjects):
         gp = grade_points.get(s["grade"], 0)
         total_points += gp * credit
         total_credits += credit
+        # Note: Some systems consider C- "Weak" as well. 
+        # I've kept it as D and F per your original logic.
         if s["grade"] in ["D", "F"]:
             weak_count += 1
 
     gpa = round(total_points / total_credits, 2) if total_credits else 0
     return gpa, total_credits, weak_count
-
 # ---------------- ROUTES ----------------
 @app.route("/")
 def home():

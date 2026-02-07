@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Info | Academic Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <div class="logo">🎓 Academic Hub</div>
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="info-wrapper">
+    <section class="info-header">
+        <h1>System Information</h1>
+        <p>Technical specifications and grading methodology for the 2026 Academic Year.</p>
+    </section>
+
+    <div class="info-grid">
+        <section class="info-card">
+            <h3>Standard Grading Scale</h3>
+            <p>The system utilizes a 4.0 weighted scale to calculate your performance.</p>
+            <table class="grade-table">
+                <thead>
+                    <tr><th>Grade</th><th>Point</th><th>Definition</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>A+</td><td>4.0</td><td>Excellent</td></tr>
+                    <tr><td>A</td><td>4.0</td><td>Excellent</td></tr>
+                    <tr><td>A-</td><td>3.7</td><td>Very Good</td></tr>
+                    <tr><td>B+</td><td>3.3</td><td>Good</td></tr>
+                    <tr><td>B</td><td>3.0</td><td>Satisfactory</td></tr>
+                    <tr><td>B-</td><td>2.7</td><td>Satisfactory</td></tr>
+                    <tr><td>C+</td><td>2.3</td><td>Passing</td></tr>
+                    <tr><td>C</td><td>2.0</td><td>Passing</td></tr>
+                    <tr><td>C-</td><td>1.7</td><td>Repeating</td></tr>
+                    <tr><td>D</td><td>1.0</td><td>Marginal</td></tr>
+                    <tr><td>F</td><td>0.0</td><td>Failure</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="info-card">
+            <h3>Calculation Methodology</h3>
+            <p>Your GPA is calculated using the weighted credit hour method:</p>
+            <div class="formula-box">
+                $$GPA = \frac{\sum (Grade Points \times Credits)}{\sum Credits}$$
+            </div>
+            <p class="note"><strong>Note:</strong> Non-credit courses are excluded from the cumulative total calculation.</p>
+            
+            <div class="tech-specs">
+                <h4>System Details</h4>
+                <ul>
+                    <li><strong>Version:</strong> 2.1.0 (2026 Build)</li>
+                    <li><strong>Database:</strong> SQLite3</li>
+                    <li><strong>Framework:</strong> Flask 3.0</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <div class="footer-action">
+        <p>Need to update your records?</p>
+        <a href="{{ url_for('gpa_calculator_route') }}" class="btn-link">Go to Calculator</a>
+    </div>
+</main>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
