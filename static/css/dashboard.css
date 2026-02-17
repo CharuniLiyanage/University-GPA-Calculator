@@ -1,11 +1,12 @@
+/* ===================== MODERN TECH COMPANY STYLE ===================== */
 :root {
-    --primary-color: #0f172a;    /* Deep Slate/Navy */
-    --secondary-color: #4f46e5;  /* Indigo Accent */
-    --accent-color: #10b981;     /* Emerald Success */
-    --bg-color: #f8fafc;         /* Soft Pearl Grey */
+    --primary: #111827;       /* Deep charcoal */
+    --accent: #2563eb;        /* Modern blue */
+    --background: #f9fafb;
     --card-bg: #ffffff;
-    --text-color: #334155;       /* Slate Grey */
-    --nav-text: #94a3b8;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
 }
 
 body {
@@ -17,36 +18,48 @@ body {
 }
 
 /* -------------------------- HEADER / NAVBAR -------------------------- */
+
+/* ================= NAVBAR ================= */
 header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem;
+    background: white;
+    padding: 20px 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 header h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
 }
 
 nav a {
-    margin-left: 25px;
+    margin-left: 30px;
+    font-size: 0.95rem;
+    color: var(--muted);
     font-weight: 500;
-    color: var(--nav-text);
-    text-decoration: none;
 }
 
 nav a:hover {
-    color: white;
+    color: var(--primary);
 }
 
+nav a.highlight {
+    background: var(--accent);
+    color: rgb(255, 255, 255);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+nav a.highlight:hover {
+    opacity: 0.9;
+}
 /* Dashboard Content */
 .dashboard-wrapper { max-width: 1100px; margin: 3rem auto; padding: 0 2rem; }
 
@@ -55,7 +68,7 @@ nav a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    background: linear-gradient(135deg, #4a658f 0%, #334155 100%);
     color: white;
     padding: 3rem;
     border-radius: 1.5rem;

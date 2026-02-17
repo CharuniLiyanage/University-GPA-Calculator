@@ -1,12 +1,15 @@
 /* -------------------------- PROFESSIONAL PALETTE -------------------------- */
 :root {
-    --primary-color: #0f172a;    /* Deep Navy */
-    --secondary-color: #4f46e5;  /* Indigo Accent */
-    --accent-color: #10b981;     /* Emerald Green */
-    --bg-color: #f8fafc;         /* Soft Pearl */
-    --card-bg: #ffffff;
-    --text-color: #334155;       /* Slate Grey */
-    --border-color: #e2e8f0;
+    --primary: #111827;       /* Deep charcoal */
+    --accent: #2563eb;        /* Modern blue */
+    --background: #f9fafb;    /* Page background */
+    --card-bg: #ffffff;        /* Cards and containers */
+    --text: #1f2937;           /* Main text */
+    --muted: #6b7280;          /* Secondary text */
+    --border: #e5e7eb;         /* Borders */
+    --success: #10b981;        /* Optional green */
+    --danger: #ef4444;         /* Delete red */
+    --slate: #334155;          /* Table header text */
 }
 
 /* -------------------------- GLOBAL -------------------------- */
@@ -27,30 +30,43 @@ body {
 
 /* -------------------------- HEADER -------------------------- */
 header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 20px 40px;
+    background: white;
+    padding: 20px 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-header h1 { 
-    font-size: 24px; 
-    font-weight: 700;
-    letter-spacing: -0.5px;
+header h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
 }
 
 nav a {
-    margin-left: 25px; 
-    color: #94a3b8;
-    font-weight: 500; 
+    margin-left: 30px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 500;
     text-decoration: none;
-    transition: color 0.3s; 
 }
 
-nav a:hover, nav a.highlight { color: white; }
+nav a:hover {
+    color: var(--primary);
+}
+
+nav a.highlight {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
 
 /* -------------------------- CONTAINER -------------------------- */
 .container {

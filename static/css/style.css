@@ -1,108 +1,109 @@
-/* -------------------------- PROFESSIONAL PALETTE -------------------------- */
+/* ===================== MODERN TECH COMPANY STYLE ===================== */
 :root {
-    --primary-color: #0f172a;    /* Deep Slate/Navy */
-    --secondary-color: #4f46e5;  /* Indigo Accent */
-    --accent-color: #10b981;     /* Emerald Success */
-    --bg-color: #f8fafc;         /* Soft Pearl Grey */
+    --primary: #111827;       /* Deep charcoal */
+    --accent: #2563eb;        /* Modern blue */
+    --background: #f9fafb;
     --card-bg: #ffffff;
-    --text-color: #334155;       /* Slate Grey */
-    --nav-text: #94a3b8;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
 }
 
-/* -------------------------- GLOBAL STYLES -------------------------- */
+/* ================= GLOBAL ================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', 'Roboto', sans-serif; /* Modern Inter font */
+    font-family: "Inter", "Segoe UI", sans-serif;
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
 }
 
-a {
-    text-decoration: none;
-    transition: 0.3s ease;
-}
-
-/* -------------------------- HEADER / NAVBAR -------------------------- */
+/* ================= NAVBAR ================= */
 header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem;
+    background: white;
+    padding: 20px 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 header h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary);
 }
 
 nav a {
-    margin-left: 25px;
+    margin-left: 30px;
+    font-size: 0.95rem;
+    color: var(--muted);
     font-weight: 500;
-    color: var(--nav-text);
 }
 
 nav a:hover {
-    color: white;
+    color: var(--primary);
 }
 
-/* -------------------------- HERO SECTION -------------------------- */
+nav a.highlight {
+    background: var(--accent);
+    color: rgb(255, 255, 255);
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+nav a.highlight:hover {
+    opacity: 0.9;
+}
+
+/* ================= HERO ================= */
 .hero {
-    text-align: center;
-    padding: 120px 20px;
-    background: linear-gradient(135deg, #21386e 0%, #1e293b 100%);
-    color: white;
-    /* Professional subtle slope */
-    clip-path: ellipse(150% 100% at 40% 0%);
-    margin-bottom: 50px;
+    padding: 100px 8%;
+    text-align: left;
+    max-width: 1100px;
+    margin: auto;
 }
 
 .hero h2 {
-    font-size: 2rem;
-    font-weight: 800;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary);
     margin-bottom: 20px;
-    letter-spacing: -1px;
 }
 
 .hero p {
-    font-size: 1.2rem;
-    margin-bottom: 35px;
-    opacity: 0.8;
+    font-size: 1.1rem;
+    color: var(--muted);
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 35px;
 }
 
 .hero button {
-    background-color: var(--secondary-color);
-    color: white;
+    background: var(--accent);
     border: none;
-    padding: 14px 32px;
+    padding: 14px 34px;
     font-size: 1rem;
+    color: white;
     font-weight: 600;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-    transition: all 0.3s;
+    transition: 0.3s ease;
 }
 
 .hero button:hover {
-    transform: translateY(-2px);
-    background-color: #4338ca;
-    box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
 }
+
 
 /* -------------------------- CARDS SECTION -------------------------- */
 .cards-container {
@@ -141,44 +142,29 @@ nav a:hover {
     line-height: 1.5;
 }
 
-nav a.highlight {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 8px 18px;
-    border-radius: 10px;
-    font-weight: 600;
-}
 
-nav a.highlight:hover {
-    background: var(--secondary-color);
-}
-
-/* -------------------------- FOOTER -------------------------- */
+/* ================= FOOTER ================= */
 footer {
     text-align: center;
-    padding: 20px;
-    background-color: var(--primary-color);
-    color: #94a3b8;
+    padding: 30px;
+    background: white;
+    border-top: 1px solid var(--border);
     font-size: 0.9rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    color: var(--muted);
 }
 
-/* -------------------------- RESPONSIVE -------------------------- */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    nav {
-        margin-top: 20px;
+    .hero {
+        text-align: center;
     }
 
     .hero h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
-    .cards-container {
-        padding: 30px 20px;
+    header {
+        flex-direction: column;
+        gap: 10px;
     }
 }

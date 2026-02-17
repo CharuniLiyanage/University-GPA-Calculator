@@ -14,9 +14,37 @@ body {
     line-height: 1.6;
 }
 
-header { background: var(--navy); color: white; padding: 1rem 0; }
-.nav-container { max-width: 1000px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
-nav a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; font-weight: 500; }
+header { 
+    background: white; 
+    color: #111827; 
+    padding: 1rem 0; 
+}
+.nav-container { 
+    max-width: 1000px; 
+    margin: auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 2rem; 
+}
+nav a {
+    color: #6b7280; 
+    text-decoration: none; 
+    margin-left: 1.5rem; 
+    font-weight: 500; 
+}
+
+nav a:hover {
+    color: #111827;
+}
+
+nav a.highlight {
+    background: #2563eb;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+}
 
 .info-wrapper { max-width: 1000px; margin: 4rem auto; padding: 0 2rem; }
 
