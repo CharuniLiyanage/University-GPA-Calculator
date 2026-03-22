@@ -10,15 +10,15 @@
 <body>
 
 <header>
-        <h1>🎓 Student Performance Analysis</h1>
-        <nav>
-            <a href="{{ url_for('home') }}"class=highlight>Home</a>
-            <a href="{{ url_for('home') }}">Logout</a>
-            
-        </nav>
-    </header>
+    <h1>🎓 Student Performance Analysis</h1>
+    <nav>
+        <a href="{{ url_for('home') }}" class="highlight">Home</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
 
 <main class="dashboard-wrapper">
+    <!-- Welcome Banner -->
     <section class="welcome-banner">
         <div class="welcome-text">
             <h1>Welcome back, {{ username }}!</h1>
@@ -26,8 +26,8 @@
         </div>
         <div class="quick-stats">
             <div class="mini-stat">
-                <span>Stored GPA</span>
-                <strong>{{ gpa if gpa else '0.00' }}</strong>
+                <span>GPA</span>
+                <strong id="dashboardGpa">0.00</strong>
             </div>
             <div class="mini-stat">
                 <span>Subjects</span>
@@ -36,6 +36,7 @@
         </div>
     </section>
 
+    <!-- Action Cards -->
     <section class="action-grid">
         <a href="{{ url_for('gpa_calculator_route') }}" class="action-card">
             <div class="icon-box blue">✏️</div>
@@ -65,6 +66,46 @@
         </a>
     </section>
 </main>
+
+<!-- JS -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Dashboard Hub Initialized");
+
+    // Optional: Card click effect
+    const cards = document.querySelectorAll('.action-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.style.opacity = '0.7';
+        });
+    });
+
+    // ---------------- GPA CALCULATION ----------------
+    const subjectsRaw = '{{ subjects | tojson | safe }}';
+    const subjectsData = JSON.parse(subjectsRaw);
+
+    const gradeMap = {
+        "A+": 4.0, "A": 4.0, "A-": 3.7,
+        "B+": 3.3, "B": 3.0, "B-": 2.7,
+        "C+": 2.3, "C": 2.0, "C-": 1.7,
+        "D": 1.0,
+        "F": 0.0
+    };
+
+    let totalCredits = 0;
+    let totalPoints = 0;
+
+    subjectsData.forEach(s => {
+        const credits = parseFloat(s.credit) || 1;
+        const gp = gradeMap[s.grade] || 0;
+        totalCredits += credits;
+        totalPoints += credits * gp;
+    });
+
+    const overallGpa = totalCredits ? (totalPoints / totalCredits).toFixed(2) : "0.00";
+    document.getElementById("dashboardGpa").innerText = overallGpa;
+});
+</script>
 
 </body>
 </html>

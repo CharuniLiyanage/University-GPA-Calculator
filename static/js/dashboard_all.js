@@ -7,23 +7,40 @@ const gradeMap = {
     "F": 0.0
 };
 
+// ---------------- DEBUG (CHECK DATA) ----------------
+console.log("Subjects Data from Flask:", subjectsData);
+
 // ---------------- SUBJECT DATA ----------------
 const subjects = subjectsData.map(s => ({
-    name: s.subject_name,
+    name: s.subject_name || "Unknown",
+    credits: parseFloat(s.credits) || 1,   // ✅ fallback to 1 if missing
     gp: gradeMap[s.grade] || 0
 }));
 
+console.log("Processed Subjects:", subjects);
+
 // ---------------- OVERALL GPA ----------------
-const totalPoints = subjects.reduce((sum, s) => sum + s.gp, 0);
-const overallGpa = (totalPoints / subjects.length).toFixed(2);
+let totalCredits = 0;
+let totalPoints = 0;
+
+subjects.forEach(s => {
+    totalCredits += s.credits;
+    totalPoints += s.credits * s.gp;
+});
+
+const overallGpa = totalCredits > 0
+    ? (totalPoints / totalCredits).toFixed(2)
+    : "0.00";
 
 document.getElementById("overallGpa").innerText = `GPA: ${overallGpa}`;
 
+// ---------------- GPA STATUS ----------------
 const gpaStatus = document.getElementById("gpaStatus");
+const gpaNum = parseFloat(overallGpa);
 
-if (overallGpa >= 3.0)
+if (gpaNum >= 3.0)
     gpaStatus.innerHTML = "✅ Excellent Performance";
-else if (overallGpa > 2.0)
+else if (gpaNum > 2.0)
     gpaStatus.innerHTML = "⚠️ Average – Needs Improvement";
 else
     gpaStatus.innerHTML = "❌ Academic Risk";

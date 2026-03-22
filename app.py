@@ -168,17 +168,39 @@ def dashboard():
         return redirect(url_for("login"))
 
     db = get_db()
+    # Fetch user subjects
     rows = db.execute(
         "SELECT id, subject_name, credit, grade FROM subjects WHERE user_id=?",
         (session["user_id"],)
     ).fetchall()
     subjects_list = [dict(row) for row in rows]
 
-    user_data = db.execute("SELECT gpa FROM users WHERE id=?", (session["user_id"],)).fetchone()
-    calculated_gpa, _, _ = calculate_gpa(subjects_list)
+    # ---------------- Calculate GPA ----------------
+    def calculate_gpa(subjects):
+        grade_map = {
+            "A+": 4.0, "A": 4.0, "A-": 3.7,
+            "B+": 3.3, "B": 3.0, "B-": 2.7,
+            "C+": 2.3, "C": 2.0, "C-": 1.7,
+            "D": 1.0,
+            "F": 0.0
+        }
+        total_credits = 0
+        total_points = 0
+        for sub in subjects:
+            credits = sub.get("credit", 1) or 1  # fallback if missing
+            gp = grade_map.get(sub.get("grade", "F"), 0)
+            total_credits += credits
+            total_points += credits * gp
+
+        gpa = round(total_points / total_credits, 2) if total_credits > 0 else 0.00
+        return gpa
+
+    calculated_gpa = calculate_gpa(subjects_list)
+
     db.close()
 
-    display_gpa = user_data["gpa"] if user_data and user_data["gpa"] > 0 else calculated_gpa
+    # Always use calculated GPA for display
+    display_gpa = calculated_gpa
 
     return render_template(
         "dashboard.html",
